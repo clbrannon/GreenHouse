@@ -30,10 +30,8 @@ namespace GreenHouse_App.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                UPDATE [orderItem]
-                                SET quantity = @quantity
-                                WHERE orderId = @id
-                                AND itemId = @itemId
+                            INSERT INTO invitation (sentToUserId, ownerUserId, greenHouse)
+                            VALUES (@sentToUser, @ownerUserId, @greenHouseId);
                             ";
 
                     cmd.Parameters.AddWithValue("@sentToUser", sentToUser);
@@ -44,3 +42,5 @@ namespace GreenHouse_App.Repositories
                 }
             }
         }
+    }
+}
