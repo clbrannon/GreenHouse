@@ -17,7 +17,10 @@ namespace GreenHouse_App.Controllers
         {
             _plantRepo = plantRepo;
         }
-        // GET: api/<ItemController>
+
+
+
+        // GET: api/<PlantController>
         [HttpGet]
         public List<Plant> Get()
         {
