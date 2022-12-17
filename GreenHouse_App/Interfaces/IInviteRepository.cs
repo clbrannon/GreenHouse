@@ -1,9 +1,9 @@
 ﻿namespace GreenHouse_App.Interfaces
 {
-    public class IInviteRepository
+    public interface IInviteRepository
     {
 
-        public
+        void CreateInvite(int sentToUser, int ownerUserId, int greenHouseId);
 
     }
 }
