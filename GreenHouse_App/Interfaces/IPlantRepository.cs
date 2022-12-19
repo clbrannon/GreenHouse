@@ -12,5 +12,7 @@ namespace GreenHouse_App.Interfaces
 
         void addPlant(Plant plant);
 
+        void deletePlant(int plantId);
+
     }
 }

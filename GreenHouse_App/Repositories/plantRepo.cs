@@ -171,7 +171,35 @@ namespace GreenHouse_App.Repositories
             }
         }
 
-        
+        public void deletePlant(int plantId)
+
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                    Delete 
+                                    From Plant
+                                    WHERE id = @plantId
+                                ";
+
+                    cmd.Parameters.AddWithValue("@plantId", plantId);
+
+
+                    cmd.ExecuteNonQuery();
+
+
+
+                }
+            }
+        }
+
+
+
+
+
 
 
 
