@@ -7,5 +7,10 @@ namespace GreenHouse_App.Interfaces
         List<Plant> GetAllPlants();
 
         List<Plant> GetPlantsByGreenHouse(int GreenHouseId);
+
+        Plant GetPlantById(int PlantId);
+
+        void addPlant(Plant plant);
+
     }
 }
