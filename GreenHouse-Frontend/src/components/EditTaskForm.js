@@ -3,22 +3,30 @@ import { Button, Stack, TextField, FormControlLabel, Checkbox, InputLabel, Selec
 import { useHistory } from "react-router-dom"
 
 
+export const EditTaskForm = () => {
 
-export const TaskForm = () => {
-
+    const Postid = localStorage.getItem("editPost")
+    var currentPost = {}
     const history = useHistory()
-    
-    const blankTask = {
-        title: "",
-        desc: "",
-        noEnd: false,
-        endDate: "",
-        assignSelect: "",
-        completed: false
-        }
+
 
     const [family, setFamily] = useState([])
-    const [task, setTask] = useState(blankTask)
+    const [task, setTask] = useState(currentPost)
+
+
+    useEffect(
+        () => {
+            fetch(`http://localhost:8088/posts/${Postid}`)
+                .then(response => response.json())
+                .then(post => 
+                    setTask(post)
+                    
+                    
+                )
+        },
+    []
+)
+
 
     useEffect(
         () => {
@@ -36,7 +44,6 @@ export const TaskForm = () => {
 
         if (e.target.id === "noEnd") {
             setTask(task => ({...task, [e.target.id]: e.target.checked}))
-
         }
 
         else if (e.target.name === "assignSelect") {
@@ -47,6 +54,7 @@ export const TaskForm = () => {
             setTask(task => ({...task, [e.target.id]: e.target.value}))
 
         }
+
     }
 
     const endDateOption = () => {
@@ -54,34 +62,31 @@ export const TaskForm = () => {
         if (!task.noEnd) {
 
             return <>
-        
-            <TextField id="endDate" label="End Date" value={task.endDate} variant="standard" onChange={handleChange}/>
+
+            <FormControlLabel control={<Checkbox id="noEnd" value={task.noEnd} onChange={handleChange}/>} label="No End Date"/>
+            <TextField id="endDate" value={task.endDate} variant="standard" onChange={handleChange}/>
             
             </>
-
         }
 
         else { 
-            return 
+            
+            return <FormControlLabel control={<Checkbox id="noEnd" defaultChecked value={task.noEnd} onChange={handleChange}/>} label="No End Date"/>
         }
     }
 
     const handleSubmit = e => {
-        console.log("Submit")
 
-        return fetch(`http://localhost:8088/posts`, {
-            method: "POST",
+        return fetch(`http://localhost:8088/posts/${Postid}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(task)
-            })
-
-            .then(response => response.json())
-            .then(() => {
-                setTask(blankTask)
-                history.push("/posts")
-
+        })
+        .then(response => response.json())
+        .then(() => {
+            history.push("/posts")
             })
     }
 
@@ -97,14 +102,14 @@ export const TaskForm = () => {
         mt={15} 
     >
 
-        <TextField id="title" label="Title" value={task.title} variant="standard" onChange={handleChange}/>
-        <TextField id="desc" label="Description" multiline value={task.desc} variant="standard" onChange={handleChange}/>
+        <TextField id="title" value={task.title} variant="standard" onChange={handleChange}/>
+        <TextField id="desc"  multiline value={task.desc} variant="standard" onChange={handleChange}/>
        
-        <FormControlLabel control={<Checkbox id="noEnd" value={task.noEnd} onChange={handleChange}/>} label="No End Date"/>
         {endDateOption()}
-        <Box sx={{ minWidth: 120 }} name="D">
-            <FormControl fullWidth name="A">
-                <InputLabel name="B">Assign To</InputLabel>
+        
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+                <InputLabel>Assign To</InputLabel>
                 <Select
                     name="assignSelect"
                     label="Assign To"
@@ -113,11 +118,10 @@ export const TaskForm = () => {
                     {
                         family.map(
                             (members) => {
-                                return <MenuItem value = {members.fullName} key={members.id} name="menuItem">{members.fullName}</MenuItem>
+                                return <MenuItem value={members.fullName} key={members.id} name="menuItem"> {members.fullName}</MenuItem>
                             }
                         )
                     }
-
                 </Select>
             </FormControl>
         </Box>
@@ -125,10 +129,9 @@ export const TaskForm = () => {
            onClick={(clickEvent) => handleSubmit(clickEvent)}
             color="inherit"
         >
-            Post
+        Post
         </Button>
     </Stack>
-</>
-
+    </>
     )
 }

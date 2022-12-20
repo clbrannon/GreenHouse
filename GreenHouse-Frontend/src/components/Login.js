@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react"
-import { TextField, Stack, Button, Typography, Box, Link } from "@mui/material"
-import { House } from "@mui/icons-material"
+import { TextField, Stack, Button, Typography, Box } from "@mui/material"
+import { Link, useHistory } from "react-router-dom"
 
 
 
 export const Login = () => {
     const [username, set] = useState("")
     const existDialog = useRef()
-   // const history = useHistory()
+    const history = useHistory()
+
+    
 
     const existingUserCheck = () => {
         return fetch(`http://localhost:8088/members?username=${username}`)
@@ -21,12 +23,11 @@ export const Login = () => {
             .then(exists => {
                 if (exists) {
                     localStorage.setItem("honey_customer", exists.id)
-                   // history.push("/")
-                } else {
-
-
-
-                   // existDialog.current.showModal()
+                    localStorage.setItem("isParent", exists.parent)
+                    history.push("/posts")
+                } 
+                else {
+                    existDialog.current.showModal()
                 }
             })
     }
@@ -44,39 +45,39 @@ export const Login = () => {
                 justifyContent="center"
                 alignItems="center"
                 spacing={1}
-                mt={15}
+                mt={5}
             > 
-                <form className="form--login" onSubmit={handleLogin}>
+                <form className="form--login" onSubmit={handleLogin}>              
+                    <Typography variant='h2' component='div' sx={{ flexGrow: 1}}>
+                        Honey-Doo 
+                    </Typography>
 
+                    <br/>
 
-                <Typography variant='h2' component='div' sx={{ flexGrow: 1}}>
-                    Welcome Home 
-                </Typography>
-                
-                
-                
-                
-                <Box sx={{ m: 10, boxShadow: 20, padding: 5}} >
-                    <Stack>
+                    <Typography variant='h3' component='div' sx={{ flexGrow: 1}}>
+                        Your HouseHold To-Do list.
+                    </Typography>
+            
+                    <Box sx={{ m: 8, boxShadow: 20, padding: 5}} >
+                        <Stack>
 
-                    <TextField id="username" label="Username"  variant="standard" onChange={evt => set(evt.target.value)}/>
+                            <TextField id="username" label="Username"  variant="standard" onChange={evt => set(evt.target.value)}/>
 
-                    <Button
-                        type="submit"
-                        color="inherit">Sign In
-                    </Button>
-                    <Box sx={{ mt: 5,  }}>
-                        <section className="link--register">           
-                            <Link  href="#">Not a Member?</Link>
-                        </section>
-                    </Box>
-                    </Stack>
-                </Box>
+                            <Button
+                                type="submit"
+                                color="inherit"
+                            >Sign In
+                            </Button>
 
-                    
+                            <Box sx={{ mt: 5,  }}>
+                                <section className="link--register">           
+                                <Link to="/register" >Not a member?</Link>
+                                </section>
+                            </Box>
+                        </Stack>
+                    </Box>                 
                 </form>
             </Stack>
-
         </main>
     )
 }

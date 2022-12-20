@@ -49,6 +49,43 @@
       "id": 6
     }
   ],
-  "posts": [],
+  "posts": [
+    {
+      "title": "Mow Lawn",
+      "desc": "Front and back yard needs to be mowed",
+      "noEnd": false,
+      "endDate": "Monday",
+      "assignSelect": "Jeffrey Brannon",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "Feed Jeffrey",
+      "desc": "Jeff needs to be watered",
+      "noEnd": false,
+      "endDate": "Monday Morning",
+      "assignSelect": "Rae Brannon",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "title": "Trash",
+      "desc": "The trash needs to be taken out and cans moved to street",
+      "noEnd": false,
+      "endDate": "Noon",
+      "assignSelect": "Rae Brannon",
+      "completed": false,
+      "id": 3
+    },
+    {
+      "title": "Finish Project",
+      "desc": "Clean up the bugs",
+      "noEnd": true,
+      "endDate": "Monday",
+      "assignSelect": "Jeffrey Brannon",
+      "completed": false,
+      "id": 4
+    }
+  ],
   "house": []
 }
