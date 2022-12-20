@@ -24,5 +24,12 @@ namespace GreenHouse_App.Controllers
             var returnVar = _greenHouseRepo.GetGreenHouseByUserId(userId);
             return returnVar;
         }
+
+        [HttpPost("")]
+        public void Post(GreenHouse greenHouse)
+        {
+            _greenHouseRepo.addGreenHouse(greenHouse);
+        }
+
     }
 }

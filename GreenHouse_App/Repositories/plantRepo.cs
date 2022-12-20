@@ -102,5 +102,140 @@ namespace GreenHouse_App.Repositories
             }
 
         }
+
+        public Plant GetPlantById(int plantId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM Plant
+                                WHERE plant.id = @plantId;
+                            ";
+                    cmd.Parameters.AddWithValue("@plantId", plantId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Plant plant = new Plant();
+                        while (reader.Read())
+                        {
+                            plant.Id = reader.GetInt32(reader.GetOrdinal("id"));
+                            plant.greenHouse = reader.GetInt32(reader.GetOrdinal("greenHouse"));
+                            plant.url = reader.GetString(reader.GetOrdinal("image"));
+                            plant.commonName = reader.GetString(reader.GetOrdinal("commonName"));
+                            plant.sciName = reader.GetString(reader.GetOrdinal("sciName"));
+                            plant.description = reader.GetString(reader.GetOrdinal("description"));
+                            plant.light = reader.GetString(reader.GetOrdinal("light"));
+                            plant.soil = reader.GetString(reader.GetOrdinal("soil"));
+                            plant.lastWatered = reader.GetDateTime(reader.GetOrdinal("lastWatered"));
+                            plant.notes = reader.GetString(reader.GetOrdinal("notes"));
+
+                        };
+                        return plant;
+                    }
+
+                }
+            }
+        }
+
+        public void addPlant(Plant plant)
+
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    Insert Into plant(greenHouse, [image], commonName, sciName, [description], light, soil, lastWatered, notes)
+                    VALUES(@GreenHouse, @image, @commonName, @sciName, @desc, @light, @soil, @date, @notes)                        
+                                ";
+
+                    cmd.Parameters.AddWithValue("@GreenHouse", plant.greenHouse);
+                    cmd.Parameters.AddWithValue("@image", plant.url);
+                    cmd.Parameters.AddWithValue("@commonName", plant.commonName);
+                    cmd.Parameters.AddWithValue("@sciName", plant.sciName);
+                    cmd.Parameters.AddWithValue("@desc", plant.description);
+                    cmd.Parameters.AddWithValue("@light", plant.light);
+                    cmd.Parameters.AddWithValue("@soil", plant.soil);
+                    cmd.Parameters.AddWithValue("@date", plant.lastWatered);
+                    cmd.Parameters.AddWithValue("@notes", plant.notes);
+
+                    cmd.ExecuteNonQuery();
+
+
+
+                }
+            }
+        }
+
+        public void deletePlant(int plantId)
+
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                    Delete 
+                                    From Plant
+                                    WHERE id = @plantId
+                                ";
+
+                    cmd.Parameters.AddWithValue("@plantId", plantId);
+
+
+                    cmd.ExecuteNonQuery();
+
+
+
+                }
+            }
+        }
+
+        public void updatePlant(Plant plant)
+
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+
+                    UPDATE plant
+                    SET greenHouse = @GreenHouse, [image] = @image, commonName = @commonName, sciName = @sciName, [description] = @desc, light = @light, soil = @soil, lastWatered = @date, notes = @notes
+                    WHERE id = @id                       
+                                ";
+                    cmd.Parameters.AddWithValue("@id", plant.Id);
+                    cmd.Parameters.AddWithValue("@GreenHouse", plant.greenHouse);
+                    cmd.Parameters.AddWithValue("@image", plant.url);
+                    cmd.Parameters.AddWithValue("@commonName", plant.commonName);
+                    cmd.Parameters.AddWithValue("@sciName", plant.sciName);
+                    cmd.Parameters.AddWithValue("@desc", plant.description);
+                    cmd.Parameters.AddWithValue("@light", plant.light);
+                    cmd.Parameters.AddWithValue("@soil", plant.soil);
+                    cmd.Parameters.AddWithValue("@date", plant.lastWatered);
+                    cmd.Parameters.AddWithValue("@notes", plant.notes);
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+
+
+
+
+
+
+
+
     }
 }
+
+
+

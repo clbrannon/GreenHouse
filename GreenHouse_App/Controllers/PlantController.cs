@@ -28,11 +28,41 @@ namespace GreenHouse_App.Controllers
             return returnVar;
         }
 
-        [HttpGet("{greenHouseId}")]
-        public List<Plant> Get(int greenHouseId)
+        [HttpGet("GH{greenHouseId}")]
+        public List<Plant> GetPlants(int greenHouseId)
         {
             var returnVar = _plantRepo.GetPlantsByGreenHouse(greenHouseId);
             return returnVar;
         }
+
+        [HttpGet("Plant{PlantId}")]
+        public Plant GetPlant(int PlantId)
+        {
+            var returnVar = _plantRepo.GetPlantById(PlantId);
+            return returnVar;
+        }
+
+        [HttpPost("")]
+        public void Post(Plant plant)
+        {         
+                _plantRepo.addPlant(plant);         
+        }
+
+        [HttpDelete("{plantId}")]
+        public void Delete(int plantId)
+        {
+            _plantRepo.deletePlant(plantId);
+        }
+
+        [HttpPut("{PlantId}")]
+        public void Put(Plant plant)
+        {
+            _plantRepo.updatePlant(plant);
+           
+        }
+
+
+
+
     }
 }
