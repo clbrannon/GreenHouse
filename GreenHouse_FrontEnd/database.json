@@ -1,0 +1,46 @@
+{
+  "members": [
+    {
+      "fullName": "Chris Brannon",
+      "username": "clbrannon",
+      "password": "chris",
+      "parent": true,
+      "newHouse": false,
+      "id": 1
+    },
+    {
+      "fullName": "Rae Brannon",
+      "username": "rmbrannon",
+      "password": "rae",
+      "parent": true,
+      "newHouse": false,
+      "id": 2
+    },
+    {
+      "fullName": "Maple Brannon",
+      "username": "mtbrannon",
+      "password": "maple",
+      "parent": false,
+      "newHouse": false,
+      "id": 3
+    },
+    {
+      "fullName": "Rose Brannon",
+      "username": "rmbrannon",
+      "password": "rose",
+      "parent": false,
+      "newHouse": false,
+      "id": 4
+    },
+    {
+      "fullName": "Juniper Brannon",
+      "username": "jbbrannon",
+      "password": "juniper",
+      "parent": false,
+      "newHouse": false,
+      "id": 5
+    }
+  ],
+  "posts": [],
+  "house": []
+}
