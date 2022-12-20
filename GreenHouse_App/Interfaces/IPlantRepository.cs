@@ -14,5 +14,7 @@ namespace GreenHouse_App.Interfaces
 
         void deletePlant(int plantId);
 
+        void updatePlant(Plant plant);
+
     }
 }

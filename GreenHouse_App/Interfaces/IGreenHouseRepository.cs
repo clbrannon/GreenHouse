@@ -7,5 +7,7 @@ namespace GreenHouse_App.Interfaces
 
         GreenHouse GetGreenHouseByUserId(int userId);
 
+        public void addGreenHouse(GreenHouse greenhouse);
+
     }
 }

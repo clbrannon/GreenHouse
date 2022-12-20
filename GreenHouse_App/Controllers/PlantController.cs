@@ -54,6 +54,13 @@ namespace GreenHouse_App.Controllers
             _plantRepo.deletePlant(plantId);
         }
 
+        [HttpPut("{PlantId}")]
+        public void Put(Plant plant)
+        {
+            _plantRepo.updatePlant(plant);
+           
+        }
+
 
 
 

@@ -196,7 +196,36 @@ namespace GreenHouse_App.Repositories
             }
         }
 
+        public void updatePlant(Plant plant)
 
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+
+                    UPDATE plant
+                    SET greenHouse = @GreenHouse, [image] = @image, commonName = @commonName, sciName = @sciName, [description] = @desc, light = @light, soil = @soil, lastWatered = @date, notes = @notes
+                    WHERE id = @id                       
+                                ";
+                    cmd.Parameters.AddWithValue("@id", plant.Id);
+                    cmd.Parameters.AddWithValue("@GreenHouse", plant.greenHouse);
+                    cmd.Parameters.AddWithValue("@image", plant.url);
+                    cmd.Parameters.AddWithValue("@commonName", plant.commonName);
+                    cmd.Parameters.AddWithValue("@sciName", plant.sciName);
+                    cmd.Parameters.AddWithValue("@desc", plant.description);
+                    cmd.Parameters.AddWithValue("@light", plant.light);
+                    cmd.Parameters.AddWithValue("@soil", plant.soil);
+                    cmd.Parameters.AddWithValue("@date", plant.lastWatered);
+                    cmd.Parameters.AddWithValue("@notes", plant.notes);
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
 
 
 

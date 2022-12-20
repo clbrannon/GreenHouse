@@ -56,5 +56,31 @@ namespace GreenHouse_App.Repositories
 
         }
 
+        public void addGreenHouse(GreenHouse greenHouse)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO greenHouse (houseName)
+                        VALUES (@houseName)
+
+                            ";
+                    cmd.Parameters.AddWithValue("@houseName", greenHouse.houseName);
+
+                    cmd.ExecuteNonQuery();
+
+
+
+                }
+            }
+
+        }
+
+
+
+
     }
 }
