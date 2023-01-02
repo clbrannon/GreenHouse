@@ -42,7 +42,7 @@ namespace GreenHouse_App.Controllers
             return returnVar;
         }
 
-        [HttpPost("")]
+        [HttpPost("NewPlant")]
         public void Post(Plant plant)
         {         
                 _plantRepo.addPlant(plant);         

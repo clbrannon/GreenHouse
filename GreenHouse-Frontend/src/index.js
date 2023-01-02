@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 
-import { HoneyDew } from './components/HoneyDew';
+import { GreenHouse } from './components/GreenHouse';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <HoneyDew />
+      <GreenHouse />
     </BrowserRouter>   
   </React.StrictMode>
 );
