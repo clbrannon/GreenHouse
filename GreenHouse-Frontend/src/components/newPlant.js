@@ -31,7 +31,7 @@ export const NewPlantForm = () => {
         }
     
     const blankPlant = {
-        greenHouse: 0,
+        userId: localStorage.getItem("User"),
         url: "",
         commonName: "",
         sciName: "",
@@ -93,7 +93,6 @@ export const NewPlantForm = () => {
             body: JSON.stringify(plant)
             })
 
-            .then(response => response.json())
             .then(() => {
                 setPlant(blankPlant)
                 history.push("/plants")

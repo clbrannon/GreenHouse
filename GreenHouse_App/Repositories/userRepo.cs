@@ -23,7 +23,7 @@ namespace GreenHouse_App.Repositories
             }
         }
 
-        public User getUserById(int userId)
+        public User getUserByName(string username)
         {
             using (SqlConnection conn = Connection)
             {
@@ -33,9 +33,9 @@ namespace GreenHouse_App.Repositories
                     cmd.CommandText = @"
                                 SELECT *
                                 FROM [user]
-                                WHERE [user].id = @userId;
+                                WHERE [user].userName = @username;
                             ";
-                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@username", username);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         User user = new User();
@@ -56,6 +56,46 @@ namespace GreenHouse_App.Repositories
                 }
             }
         }
+
+
+        public List<User> GetAllUsers()
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [user]                               
+                            ";
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<User> users = new List<User>();
+                        while (reader.Read())
+                        {
+                            User user = new User()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                                Image = reader.GetString(reader.GetOrdinal("image")),
+                                Password = reader.GetString(reader.GetOrdinal("password")),
+                                FullName = reader.GetString(reader.GetOrdinal("fullName")),
+                                UserName = reader.GetString(reader.GetOrdinal("userName")),
+                                GreenHouseId = reader.GetInt32(reader.GetOrdinal("greenHouseId"))
+                            };
+                            users.Add(user);
+                        }
+
+                        return users;
+                    }
+
+                }
+            }
+        }
+
+
+
+
 
         public void addUser(User user)
 

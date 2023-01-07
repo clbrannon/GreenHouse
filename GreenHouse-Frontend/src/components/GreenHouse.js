@@ -7,8 +7,8 @@ export const GreenHouse = () => {
 
     return (
         <>     
-            {/* <ApplicationViews /> */}
-            <PlantList/>
+             <ApplicationViews /> 
+
         </>
     )
  }

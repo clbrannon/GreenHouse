@@ -12,9 +12,9 @@ export const Login = () => {
     
 
     const existingUserCheck = () => {
-        return fetch(`http://localhost:8088/members?username=${username}`)
+        return fetch(`https://localhost:7021/api/User/${username}`)
             .then(res => res.json())
-            .then(user => user.length ? user[0] : false)
+            .then(user => user.id ? user : false)
     }
 
     const handleLogin = (e) => {
@@ -22,9 +22,8 @@ export const Login = () => {
         existingUserCheck()
             .then(exists => {
                 if (exists) {
-                    localStorage.setItem("honey_customer", exists.id)
-                    localStorage.setItem("isParent", exists.parent)
-                    history.push("/posts")
+                    localStorage.setItem("User", exists.id)
+                    history.push("/plants")
                 } 
                 else {
                     existDialog.current.showModal()
@@ -49,13 +48,7 @@ export const Login = () => {
             > 
                 <form className="form--login" onSubmit={handleLogin}>              
                     <Typography variant='h2' component='div' sx={{ flexGrow: 1}}>
-                        Honey-Doo 
-                    </Typography>
-
-                    <br/>
-
-                    <Typography variant='h3' component='div' sx={{ flexGrow: 1}}>
-                        Your HouseHold To-Do list.
+                        GreenHouse 
                     </Typography>
             
                     <Box sx={{ m: 8, boxShadow: 20, padding: 5}} >

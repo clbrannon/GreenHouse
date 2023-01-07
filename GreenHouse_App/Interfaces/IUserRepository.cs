@@ -5,7 +5,8 @@ namespace GreenHouse_App.Interfaces
     public interface IUserRepository
     {
 
-        public User getUserById(int userId);
+        public User getUserByName(string username);
+        public List<User> GetAllUsers();
         public void addUser(User user);
 
     }

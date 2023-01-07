@@ -55,11 +55,22 @@ export const PlantList = () => {
             <>
 
                 <CardActions>
-                <Button size="small"
-                onClick={() => {
-                    deletePlant(plant.id)}}
-                >Delete
-                </Button>
+                    <Button size="small"
+                        onClick={() => {
+                            localStorage.setItem("editPlant", plant.id)
+                            history.push("/EditPlant")
+                        }}
+                        >Edit
+                    </Button>
+                </CardActions>
+
+                <CardActions>
+                    <Button size="small"
+                        onClick={() => {
+                            deletePlant(plant.id)
+                        }}
+                        >Delete
+                    </Button>
                 </CardActions>       
             </> 
         )
@@ -139,7 +150,14 @@ export const PlantList = () => {
                             
                         
                     )
-                }          
+                } 
+
+                    <Button size="large"
+                        onClick={() => {
+                            history.push("/newplant")
+                        }}
+                        >Add Plant
+                    </Button>        
             </Stack> 
         </Box> 
         </>

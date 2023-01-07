@@ -28,10 +28,10 @@ namespace GreenHouse_App.Controllers
             return returnVar;
         }
 
-        [HttpGet("GH{greenHouseId}")]
-        public List<Plant> GetPlants(int greenHouseId)
+        [HttpGet("GH{userId}")]
+        public List<Plant> GetPlants(int userId)
         {
-            var returnVar = _plantRepo.GetPlantsByGreenHouse(greenHouseId);
+            var returnVar = _plantRepo.GetPlantsByUserId(userId);
             return returnVar;
         }
 

@@ -1,55 +1,37 @@
 // import { Login } from "./Login.js"
 // import { NavBar } from "./NavBar.js"
 // import { RegisterForm } from "./Register.js"
-// import { NewPlantForm } from "./TaskForm.js"
-// import { PostList } from "./PostList.js"
-// import React from "react"
-// import { Route } from "react-router-dom"
-// import { EditTaskForm } from "./EditTaskForm.js"
+import { EditPlantForm } from "./EditPlantForm.js"
+import React from "react"
+import { Route } from "react-router-dom"
+import { PlantList } from "./plantList.js"
+import { Login } from "./Login.js"
+import { NewPlantForm } from "./newPlant.js"
 
-// export const ApplicationViews = () => {
-//     return (
+export const ApplicationViews = () => {
+    return (
 
-//         <>
-//            <Route exact path="/">
-//                <NewPlantForm />
-//                 {/* <NavBar />
-//                 <Login /> */}
+        <>
+           <Route exact path="/">
+               <Login />
+           </Route>
 
-//            </Route>
+           <Route path="/EditPlant">
+               <EditPlantForm />
+           </Route>
 
-//            <Route path="/completed">
-//                <NavBar />
-//                <PostList />
+           <Route path="/plants">
+               <PlantList />
+           </Route>
 
-//            </Route>
+           <Route path="/newplant">
+               <NewPlantForm />
+           </Route>
 
-//            <Route path="/posts">
-//                 <NavBar />
-//                 <PostList />
 
-//            </Route>
-
-//            <Route path="/createpost">
-//                 <NavBar />
-//                 <TaskForm />
-
-//            </Route>
-
-//            <Route path="/register">
-//                 <NavBar />
-//                 < RegisterForm />
-
-//            </Route>
-
-//            <Route path="/editpost">
-//                 <NavBar />
-//                 <EditTaskForm />
-
-//            </Route>
         
         
-//         </>
+        </>
 
-//     )
-// }
+    )
+}
