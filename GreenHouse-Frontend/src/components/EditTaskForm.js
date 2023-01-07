@@ -6,12 +6,12 @@ import { useHistory } from "react-router-dom"
 export const EditTaskForm = () => {
 
     const Postid = localStorage.getItem("editPost")
-    var currentPost = {}
+    var currentPlant = {}
     const history = useHistory()
 
 
     const [family, setFamily] = useState([])
-    const [task, setTask] = useState(currentPost)
+    const [plant, setPlant] = useState(currentPlant)
 
 
     useEffect(
@@ -42,38 +42,14 @@ export const EditTaskForm = () => {
 
     const handleChange = e => {
 
-        if (e.target.id === "noEnd") {
-            setTask(task => ({...task, [e.target.id]: e.target.checked}))
-        }
 
-        else if (e.target.name === "assignSelect") {
-            setTask(task => ({...task, [e.target.name]: e.target.value}))
-        }
-
-        else {
             setTask(task => ({...task, [e.target.id]: e.target.value}))
 
         }
 
     }
 
-    const endDateOption = () => {
-
-        if (!task.noEnd) {
-
-            return <>
-
-            <FormControlLabel control={<Checkbox id="noEnd" value={task.noEnd} onChange={handleChange}/>} label="No End Date"/>
-            <TextField id="endDate" value={task.endDate} variant="standard" onChange={handleChange}/>
-            
-            </>
-        }
-
-        else { 
-            
-            return <FormControlLabel control={<Checkbox id="noEnd" defaultChecked value={task.noEnd} onChange={handleChange}/>} label="No End Date"/>
-        }
-    }
+    
 
     const handleSubmit = e => {
 
