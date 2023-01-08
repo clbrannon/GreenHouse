@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Card, CardContent, Typography, CardActions, Button, Box, Stack } from "@mui/material"
 import { useHistory } from "react-router-dom"
 
@@ -55,11 +55,22 @@ export const PlantList = () => {
             <>
 
                 <CardActions>
-                <Button size="small"
-                onClick={() => {
-                    deletePlant(plant.id)}}
-                >Delete
-                </Button>
+                    <Button size="small"
+                        onClick={() => {
+                            localStorage.setItem("editPlant", plant.id)
+                            history.push("/EditPlant")
+                        }}
+                        >Edit
+                    </Button>
+                </CardActions>
+
+                <CardActions>
+                    <Button size="small"
+                        onClick={() => {
+                            deletePlant(plant.id)
+                        }}
+                        >Delete
+                    </Button>
                 </CardActions>       
             </> 
         )
@@ -75,6 +86,14 @@ export const PlantList = () => {
         <Box m={5} padding={2}>
 
             <Typography variant='h3' component='div' sx={{ flexGrow: 1}}>Plant List</Typography>
+
+            <Button size="small"
+                        onClick={() => {
+                            localStorage.setItem("User", null)
+                            history.push("/")
+                        }}
+                        >Logout
+                    </Button>
     
             <Stack mt={5} direction="row" justifyContent="flex-start" alignItems="center" flexWrap="wrap" >
             
@@ -95,6 +114,17 @@ export const PlantList = () => {
                                             {plant.sciName}
                                             <br />
                                             </Typography>
+
+                                            <Box
+                                                 component="img"
+                                                 sx={{
+                                                    height: 233,
+                                                    width: 350,
+                                                    maxHeight: { xs: 233, md: 167 },
+                                                    maxWidth: { xs: 350, md: 250 },
+                                                 }}
+                                             src={plant.url}
+                                            />
 
                                             <Typography variant="body2" mt={2}>
                                             {plant.description}
@@ -139,7 +169,14 @@ export const PlantList = () => {
                             
                         
                     )
-                }          
+                } 
+
+                    <Button size="large"
+                        onClick={() => {
+                            history.push("/newplant")
+                        }}
+                        >Add Plant
+                    </Button>        
             </Stack> 
         </Box> 
         </>

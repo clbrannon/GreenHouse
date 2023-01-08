@@ -6,7 +6,7 @@ namespace GreenHouse_App.Interfaces
     {
         List<Plant> GetAllPlants();
 
-        List<Plant> GetPlantsByGreenHouse(int GreenHouseId);
+        List<Plant> GetPlantsByUserId(int userId);
 
         Plant GetPlantById(int PlantId);
 

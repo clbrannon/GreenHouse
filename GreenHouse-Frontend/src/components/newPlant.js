@@ -1,16 +1,6 @@
-import { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Button, Stack, TextField, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, FormControl, Box, TextareaAutosize } from "@mui/material"
 import { useHistory } from "react-router-dom"
-
-import DatePicker from "react-datepicker";
-
-function TableDatePicker() {
-    const [date, setDate] = useState(new Date());
-   
-    return (
-      <DatePicker selected={date} onChange={date => setDate(date)} />
-    );
-   }
 
 
 
@@ -31,7 +21,7 @@ export const NewPlantForm = () => {
         }
     
     const blankPlant = {
-        greenHouse: 0,
+        userId: localStorage.getItem("User"),
         url: "",
         commonName: "",
         sciName: "",
@@ -45,40 +35,13 @@ export const NewPlantForm = () => {
     
       
       
-      
-      
-      
-
-   // const [family, setFamily] = useState([])
     const [plant, setPlant] = useState(blankPlant)
 
-    // useEffect(
-    //     () => {
-    //         fetch(`http://localhost:8088/members`)
-    //             .then(response => response.json())
-    //             .then((famArray) => {
-
-    //                 setFamily(famArray)
-    //             })
-    //     },
-    //     []
-    // )
 
     const handleChange = e => {
 
-        // if (e.target.id === "noEnd") {
-        //     setTask(task => ({...task, [e.target.id]: e.target.checked}))
-
-        // }
-
-        // else if (e.target.name === "assignSelect") {
-        //     setTask(task => ({...task, [e.target.name]: e.target.value}))
-        // }
-
-        // else {
             setPlant(plant => ({...plant, [e.target.id]: e.target.value}))
 
-        // }
     }
 
 
@@ -93,7 +56,6 @@ export const NewPlantForm = () => {
             body: JSON.stringify(plant)
             })
 
-            .then(response => response.json())
             .then(() => {
                 setPlant(blankPlant)
                 history.push("/plants")

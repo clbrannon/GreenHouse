@@ -4,7 +4,7 @@
         public class Plant
         {
             public int Id { get; set; }
-            public int greenHouse { get; set; }
+            public int userId { get; set; }
             public string url { get; set; }
             public string commonName { get; set; }
             public string sciName { get; set; }

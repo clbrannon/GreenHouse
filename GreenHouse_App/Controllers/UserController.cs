@@ -18,18 +18,34 @@ namespace GreenHouse_App.Controllers
             _userRepo = userRepo;
         }
 
-        [HttpGet("{userId}")]
-        public User getUser(int userId)
+        [HttpGet()]
+        public List<User> Get()
         {
-            return _userRepo.getUserById(userId);
+            var returnVar = _userRepo.GetAllUsers();
+            return returnVar;
 
         }
+
+
+
+        [HttpGet("{username}")]
+        public User getUser(string username)
+        {
+            return _userRepo.getUserByName(username);
+
+        }
+
 
         [HttpPost("")]
         public void Post(User user)
-        {
+        { 
+
             _userRepo.addUser(user);
+            
         }
+           
+
+        
 
     }
 }

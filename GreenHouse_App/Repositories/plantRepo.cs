@@ -41,7 +41,7 @@ namespace GreenHouse_App.Repositories
                             Plant plant = new Plant()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                greenHouse = reader.GetInt32(reader.GetOrdinal("greenHouse")),
+                                userId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 url = reader.GetString(reader.GetOrdinal("image")),
                                 commonName = reader.GetString(reader.GetOrdinal("commonName")),
                                 sciName = reader.GetString(reader.GetOrdinal("sciName")),
@@ -61,7 +61,7 @@ namespace GreenHouse_App.Repositories
 
         }
 
-        public List<Plant> GetPlantsByGreenHouse(int greenHouseId)
+        public List<Plant> GetPlantsByUserId(int userId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -70,11 +70,11 @@ namespace GreenHouse_App.Repositories
                 {
                     cmd.CommandText = @"
                                 SELECT plant.*
-                                FROM greenHouse
-                                INNER JOIN plant ON greenHouse.id=plant.greenHouse
-                                WHERE greenHouse.id = @greenHouseId;
+                                FROM user
+                                INNER JOIN plant ON user.id = plant.userid
+                                WHERE user.id = @userid;
                             ";
-                    cmd.Parameters.AddWithValue("@greenHouseId", greenHouseId);
+                    cmd.Parameters.AddWithValue("@userId", userId);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<Plant> plants = new List<Plant>();
@@ -83,7 +83,7 @@ namespace GreenHouse_App.Repositories
                             Plant plant = new Plant()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                greenHouse = reader.GetInt32(reader.GetOrdinal("greenHouse")),
+                                userId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 url = reader.GetString(reader.GetOrdinal("image")),
                                 commonName = reader.GetString(reader.GetOrdinal("commonName")),
                                 sciName = reader.GetString(reader.GetOrdinal("sciName")),
@@ -122,7 +122,7 @@ namespace GreenHouse_App.Repositories
                         while (reader.Read())
                         {
                             plant.Id = reader.GetInt32(reader.GetOrdinal("id"));
-                            plant.greenHouse = reader.GetInt32(reader.GetOrdinal("greenHouse"));
+                            plant.userId = reader.GetInt32(reader.GetOrdinal("userId"));
                             plant.url = reader.GetString(reader.GetOrdinal("image"));
                             plant.commonName = reader.GetString(reader.GetOrdinal("commonName"));
                             plant.sciName = reader.GetString(reader.GetOrdinal("sciName"));
@@ -149,11 +149,11 @@ namespace GreenHouse_App.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    Insert Into plant(greenHouse, [image], commonName, sciName, [description], light, soil, lastWatered, notes)
-                    VALUES(@GreenHouse, @image, @commonName, @sciName, @desc, @light, @soil, @date, @notes)                        
+                    Insert Into plant(userId, [image], commonName, sciName, [description], light, soil, lastWatered, notes)
+                    VALUES(@userId, @image, @commonName, @sciName, @desc, @light, @soil, @date, @notes)                        
                                 ";
 
-                    cmd.Parameters.AddWithValue("@GreenHouse", plant.greenHouse);
+                    cmd.Parameters.AddWithValue("@userId", plant.userId);
                     cmd.Parameters.AddWithValue("@image", plant.url);
                     cmd.Parameters.AddWithValue("@commonName", plant.commonName);
                     cmd.Parameters.AddWithValue("@sciName", plant.sciName);
@@ -207,11 +207,11 @@ namespace GreenHouse_App.Repositories
                     cmd.CommandText = @"
 
                     UPDATE plant
-                    SET greenHouse = @GreenHouse, [image] = @image, commonName = @commonName, sciName = @sciName, [description] = @desc, light = @light, soil = @soil, lastWatered = @date, notes = @notes
+                    SET userId = @userId, [image] = @image, commonName = @commonName, sciName = @sciName, [description] = @desc, light = @light, soil = @soil, lastWatered = @date, notes = @notes
                     WHERE id = @id                       
                                 ";
                     cmd.Parameters.AddWithValue("@id", plant.Id);
-                    cmd.Parameters.AddWithValue("@GreenHouse", plant.greenHouse);
+                    cmd.Parameters.AddWithValue("@userId", plant.userId);
                     cmd.Parameters.AddWithValue("@image", plant.url);
                     cmd.Parameters.AddWithValue("@commonName", plant.commonName);
                     cmd.Parameters.AddWithValue("@sciName", plant.sciName);

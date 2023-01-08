@@ -23,7 +23,7 @@ namespace GreenHouse_App.Repositories
             }
         }
 
-        public User getUserById(int userId)
+        public User getUserByName(string username)
         {
             using (SqlConnection conn = Connection)
             {
@@ -33,9 +33,9 @@ namespace GreenHouse_App.Repositories
                     cmd.CommandText = @"
                                 SELECT *
                                 FROM [user]
-                                WHERE [user].id = @userId;
+                                WHERE [user].userName = @username;
                             ";
-                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@username", username);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         User user = new User();
@@ -46,7 +46,7 @@ namespace GreenHouse_App.Repositories
                             user.Password = reader.GetString(reader.GetOrdinal("password"));
                             user.FullName = reader.GetString(reader.GetOrdinal("fullName"));
                             user.UserName = reader.GetString(reader.GetOrdinal("userName"));
-                            user.GreenHouseId = reader.GetInt32(reader.GetOrdinal("greenHouseId"));
+                            user.GreenHouse = reader.GetString(reader.GetOrdinal("greenHouse"));
                            
 
                         };
@@ -57,6 +57,46 @@ namespace GreenHouse_App.Repositories
             }
         }
 
+
+        public List<User> GetAllUsers()
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [user]                               
+                            ";
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<User> users = new List<User>();
+                        while (reader.Read())
+                        {
+                            User user = new User()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                                Image = reader.GetString(reader.GetOrdinal("image")),
+                                Password = reader.GetString(reader.GetOrdinal("password")),
+                                FullName = reader.GetString(reader.GetOrdinal("fullName")),
+                                UserName = reader.GetString(reader.GetOrdinal("userName")),
+                                GreenHouse = reader.GetString(reader.GetOrdinal("greenHouse"))
+                            };
+                            users.Add(user);
+                        }
+
+                        return users;
+                    }
+
+                }
+            }
+        }
+
+
+
+
+
         public void addUser(User user)
 
         {
@@ -66,17 +106,23 @@ namespace GreenHouse_App.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    Insert Into [user]([image], [password], fullName, [userName], greenHouseId)
-                    VALUES(@image, @password, @fullName, @userName, @greenHouseId)                        
+                    Insert Into [user]([image], [password], fullName, [userName], greenHouse)
+                    VALUES(@image, @password, @fullName, @userName, @greenHouse)                        
                                 ";
 
                     cmd.Parameters.AddWithValue("@image", user.Id);
                     cmd.Parameters.AddWithValue("@password", user.Password);
                     cmd.Parameters.AddWithValue("@fullName", user.FullName);
                     cmd.Parameters.AddWithValue("@userName", user.UserName);
-                    cmd.Parameters.AddWithValue("@greenHouseId", user.GreenHouseId);
+                    cmd.Parameters.AddWithValue("@greenHouse", user.GreenHouse);
 
+                   // try {
                     cmd.ExecuteNonQuery();
+                  //  }
+                  //  catch {
+                    
+                  //  }
+                    
 
 
 
