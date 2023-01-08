@@ -38,9 +38,14 @@ namespace GreenHouse_App.Controllers
 
         [HttpPost("")]
         public void Post(User user)
-        {
+        { 
+
             _userRepo.addUser(user);
+            
         }
+           
+
+        
 
     }
 }

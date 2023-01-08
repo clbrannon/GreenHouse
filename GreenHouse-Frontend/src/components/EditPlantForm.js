@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Stack, TextField, FormControlLabel, Checkbox, InputLabel, Select, MenuItem, FormControl, Box, TextareaAutosize } from "@mui/material"
 import { useHistory } from "react-router-dom"
 
@@ -27,6 +27,18 @@ export const EditPlantForm = () => {
     
     )
 
+    function Today() {
+        const current = new Date();
+
+        const contdate = [(current.getFullYear()), ('0' + current.getMonth()+1).slice(-2), ('0' + current.getDate()).slice(-2)].join('-')
+        const date = `${contdate}`
+        return (
+          
+            date
+          
+        )
+        }
+
 
     const handleChange = e => {
 
@@ -49,6 +61,7 @@ export const EditPlantForm = () => {
             body: JSON.stringify(plant)
         })
         .then(() => {
+            localStorage.setItem("editPlant", null)
             history.push("/plants")
         })
     }
@@ -78,6 +91,19 @@ export const EditPlantForm = () => {
 				}/>
         <TextField id="notes" helperText="Notes" multiline value={plant.notes} variant="standard" onChange={handleChange}/>
         
+
+        <Button
+           onClick={() => 
+            <TextField id="lastWatered" helperText="Last Watered Date" value={Today()} variant="standard" inputProps={
+                { readOnly: true, }
+            }/>
+
+        }
+            color="inherit"
+        >
+        Water
+        </Button>
+
         <Button
            onClick={(clickEvent) => handleSubmit(clickEvent)}
             color="inherit"

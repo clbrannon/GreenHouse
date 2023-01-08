@@ -7,6 +7,7 @@ import { Route } from "react-router-dom"
 import { PlantList } from "./plantList.js"
 import { Login } from "./Login.js"
 import { NewPlantForm } from "./newPlant.js"
+import { RegisterForm } from "./register.js"
 
 export const ApplicationViews = () => {
     return (
@@ -28,6 +29,9 @@ export const ApplicationViews = () => {
                <NewPlantForm />
            </Route>
 
+           <Route path="/register">
+               <RegisterForm />
+           </Route>
 
         
         

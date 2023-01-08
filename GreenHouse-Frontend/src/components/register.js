@@ -1,6 +1,7 @@
-import { Stack, TextField, FormControlLabel, Checkbox, Button } from "@mui/material"
-import { useState } from "react"
+import { Stack, TextField, FormControlLabel, Checkbox, Button, useColorScheme } from "@mui/material"
+import React, { useState, useEffect } from "react"
 import { Link, useHistory } from "react-router-dom"
+import { check } from "yargs"
 
 
 
@@ -11,9 +12,9 @@ export const RegisterForm = () => {
 
         fullName: "",
         username: "",
-        password: "",
-        parent: false,
-        newHouse: false
+        greenhouse: "",
+        Image: ""
+
     }
 
     const history = useHistory()
@@ -21,38 +22,70 @@ export const RegisterForm = () => {
     const [member, setMember] = useState(blankMember)
 
     const handleSubmit = e => {
-        console.log("Submit")
 
-        return fetch(`http://localhost:8088/members`, {
+        return fetch(`https://localhost:7021/api/User`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(member)
         })
-            .then(response => response.json())
+           
             .then(() => {
 
                 setMember(blankMember)
             })
+
             .then(() => {
-                history.push("/posts")             
+                history.push("/")             
             })
+        
     }
 
-    const handleChange = e => {
 
-        if (e.target.id === "newHouse") {
-            setMember(member => ({...member, [e.target.id]: e.target.checked}))
-        }
-        else if (e.target.id === "parent") {
-            setMember(member => ({...member, [e.target.id]: e.target.checked}))
-        }
-        else {
-            setMember(member => ({...member, [e.target.id]: e.target.value}))
-            console.log(member)
-        }
+    const [users, setUsers] = useState()
+
+    useEffect(
+        () => {
+            fetch(`https://localhost:7021/api/user`)
+                .then(response => response.json())
+                .then((userArray) => {
+
+                    setUsers(userArray)
+
+                })
+        },
+        []
+    )
+
+
+    const usernameCheck = (newUser, userArray) => {
+        check = true
+        userArray.forEach(eachuser => {
+            
+            
+            if (eachuser.username = newUser) {
+                check = false
+            }
+            else {}
+        })
+        return check
     }
+
+
+     const handleChange = e => {
+
+    //     if (!usernameCheck(member.username, users)) {
+
+    //         <TextField error id="username" label="Username Taken"  variant="standard" value={member.username} onChange={handleChange}/>
+
+    //     }
+    //     else {
+
+             setMember(member => ({...member, [e.target.id]: e.target.value}))
+    //     }
+ 
+     }
 
     return (
         
@@ -69,8 +102,10 @@ export const RegisterForm = () => {
                     <TextField id="fullName" label="Full Name"  variant="standard" value={member.fullName} onChange={handleChange}/>
                     <TextField id="username" label="Username"  variant="standard" value={member.username} onChange={handleChange}/>
                     <TextField id="password" type='password' label="Password" variant="standard" value={member.password} onChange={handleChange}/>
-                    <FormControlLabel control={<Checkbox id="parent" value={member.parent} onChange={handleChange}/>} label="Parent"/>
-                    <FormControlLabel control={<Checkbox id="newHouse" value={member.newHouse} onChange={handleChange}/>} label="New Household"/>
+                    <TextField id="greenhouse" label="Greenhouse Name"  variant="standard" value={member.greenhouse} onChange={handleChange}/>
+                    <TextField id="image" label="Image URL"  variant="standard" value={member.image} onChange={handleChange}/>
+
+
                     <Button
                         onClick={(clickEvent) => handleSubmit(clickEvent)}
                         color="inherit">Submit
